@@ -508,3 +508,9 @@ FactoryBot/RedundantFactoryOption: # new in 2.23
   Enabled: true
 FactoryBot/SyntaxMethods: # new in 2.7
   Enabled: true
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
