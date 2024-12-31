@@ -6,6 +6,10 @@
 # and recreated between test runs. Don't rely on the data there!
 
 Rails.application.configure do
+  # This adds shibboleth headers to the request environment for testing.
+  require 'test_shibboleth_headers'
+  config.middleware.use TestShibbolethHeaders
+
   # Settings specified here will take precedence over those in config/application.rb.
 
   # While tests run files are not watched, reloading is not necessary.
