@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_31_054714) do
+ActiveRecord::Schema[8.0].define(version: 2025_01_01_010728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "channels", force: :cascade do |t|
+    t.string "channel_id", null: false
+    t.string "title", null: false
+    t.datetime "refresh_job_started_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "email_address", null: false
