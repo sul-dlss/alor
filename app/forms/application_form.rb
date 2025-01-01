@@ -15,6 +15,14 @@ class ApplicationForm
     ActiveModel::Name.new(self, nil, model_name.delete_suffix(FORM_CLASS_SUFFIX))
   end
 
+  def self.user_editable_attributes
+    (attribute_names - immutable_attributes).map(&:to_sym)
+  end
+
+  def self.immutable_attributes
+    []
+  end
+
   # @param save [Boolean] whether the form is being used to save the channel
   def valid?(save: false)
     @save = save

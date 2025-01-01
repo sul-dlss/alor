@@ -1,0 +1,7 @@
+<%= form_with(model: @channel_form) do |form| %>
+  <%= form.label :channel_id, 'Channel ID' %>
+  <%= form.text_field :channel_id, class: 'form-control', required: true %>
+  <%= form.label :title, 'Title' %>
+  <%= form.text_field :title, class: 'form-control', required: true %>
+  <%= form.submit 'Save', class: 'btn btn-primary' %>
+<% end %>
