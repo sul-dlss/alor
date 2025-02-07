@@ -1,2 +1,272 @@
+// Override Bootstrap variables
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1140px // Limit width of xxl
+);
+
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+
+// Stop the page from jumping when switching, e.g., to a tab containing a scrollbar
+html {
+  margin-left: calc(100vw - 100%);
+}
+
+// This is used on the collection show page
+.nav-underline {
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+
+  .nav-link {
+    width: 10.5rem;
+  }
+
+  .nav-link:not(.active) {
+    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+  }
+
+  .nav-link.active {
+    border-bottom: 3px solid black;
+    font-weight: bold;
+  }
+}
+
+.tabbable-panes {
+  .nav-pills {
+    background-color: var(--stanford-10-black);
+
+    .nav-link {
+      --bs-nav-link-padding-x: 0.5rem;
+
+      border-radius: unset;
+
+      &:not(:first-child) {
+        border-top: var(--bs-border-width) var(--bs-border-style) rgba(var(--bs-white-rgb), 1);
+      }
+
+      &:first-child {
+        border-top-left-radius: var(--bs-border-radius);
+        border-top-right-radius: var(--bs-border-radius);
+      }
+
+      &:last-child {
+        border-bottom-left-radius: var(--bs-border-radius);
+        border-bottom-right-radius: var(--bs-border-radius);
+      }
+
+      &:not(.active) {
+        color: var(--stanford-black);
+        padding-left: 1.7rem; // Align the text of inactive nav items with the active one, roughly
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+
+      &.active {
+        background-color: var(--stanford-black);
+        color: var(--bs-white);
+        font-weight: 700;
+
+        &::before {
+          display: inline-block;
+          margin-right: 2px;
+          font-family: bootstrap-icons;
+          vertical-align: -15%;
+          content: "\F138"; // right arrow
+        }
+      }
+
+      &.is-invalid {
+        color: var(--bs-danger-text-emphasis);
+
+        &.active {
+          background-color: white;
+          border: 2px solid var(--stanford-black);
+        }
+
+        &::after {
+          margin-left: 10px;
+          display: inline-block;
+          font-family: bootstrap-icons;
+          vertical-align: -15%;
+          content: "\F33A"; // exclamation triangle fill
+        }
+      }
+    }
+  }
+
+  // Legends by default have a larger font. When used as a form label, want a smaller font.
+  legend.form-label {
+    font-size: unset;
+  }
+}
+
+// Common to styled tables
+table.table-h3 {
+  caption {
+    padding: .25rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.5;
+    color: var(--stanford-black);
+    caption-side: top;
+    border-bottom: 1px solid var(--stanford-black);
+  }
+
+  th {
+    font-size: 1.0rem;
+    font-weight: 600;
+    color: var(--stanford-black);
+  }
+
+  tr {
+    border-color: var(--stanford-30-black);
+  }
+
+  // used for item lists
+  .list-unstyled {
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+  }
+}
+
+table.table-treegrid {
+  tr[aria-expanded] > td:first-child::before {
+    cursor: pointer;
+    font-family: bootstrap-icons;
+    content: "\F286"; // chevron-up
+    display: inline-block;
+    font-weight: 900;
+    font-size: .9rem;
+    color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+    border-color: var(--stanford-30-black);
+  }
+
+  tr[aria-expanded="true"] > td:first-child::before {
+    transform: rotate(180deg);
+    border-color: var(--stanford-30-black);
+  }
+
+  th {
+    font-size: 1.0rem;
+    font-weight: 600;
+    padding: 8px
+  }
+}
+
+// Following should be set in component library.
+.form-label {
+  margin-bottom: 0;
+}
+
+.form-text {
+  margin-bottom: 0;
+  font-size: 1rem;
+  color: unset;
+}
+
+.form-control, .form-check-input, .form-select, .input-group-text {
+  --bs-border-color: #979797;
+}
+
+.btn-link {
+  color: rgba(var(--bs-link-color-rgb), var(--bs-link-opacity, 1));
+}
+
+// Breadcrumb custom divider
+.breadcrumb {
+  --bs-breadcrumb-divider: '>'
+}
+
+// Some of our tab panes are inside a form. This hides them until the tab is active.
+.tab-content > form > .tab-pane {
+  display: none;
+}
+
+.tab-content > form > .active {
+  display: block;
+}
+
+textarea {
+  resize: both;
+}
+
+// This is a custom alert variant that is used for the review alert.
+.alert.alert-input {
+  background-color: var(--stanford-10-black);
+}
+
+// Spacing between header and main content
+.masthead {
+  margin-bottom: 1.5rem;
+}
+
+// Ensure the footer is at the bottom of the page
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#main-container {
+  flex: auto;
+}
+
+// "Subscribe to SDR news" button in footer
+#pre-footer .btn.subscribe {
+  height: fit-content;
+}
+
+// Provide invalid feedback without having to be sibling to the input
+.is-invalid.invalid-feedback {
+  display: block;
+}
+
+.hero {
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin-top: -1.5rem;
+  border-bottom: #F9A44A 20px solid;
+
+  .row {
+    min-height: 450px;
+  }
+
+  .card {
+    min-height: 225px;
+  }
+}
+
+.opacity-85 {
+  opacity: 0.85;
+}
+
+i.icon-lg {
+  font-size: 2rem;
+}
+
+i.icon-xl {
+  font-size: 3rem;
+}
+
+.secondary-card {
+  min-height: 175px;
+}
+
+.quote-card {
+  background-color: #FFF0E0;
+  min-height: 185px;
+}
+
+.quote-card, .secondary-card {
+  i {
+    color: #D1660F;
+  }
+}

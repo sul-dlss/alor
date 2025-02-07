@@ -1,0 +1,10 @@
+<% content_for :breadcrumbs do %>
+  <%= render SulViewComponent::Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: root_path) %>
+    <% if current_page?(action: :new) %>
+      <% component.with_breadcrumb(text: 'New Channel') %>
+    <% else %>
+      <% component.with_breadcrumb(text: @channel.title, active: true) %>
+    <% end %>
+  <% end %>
+<% end %>
