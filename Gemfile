@@ -39,6 +39,7 @@ gem 'bootsnap', require: false
 # gem "image_processing", "~> 1.2"
 
 # Additional gems
+gem 'action_policy'
 gem 'config'
 gem 'sul_view_components', path: '/Users/amcollie/github/sul-dlss/sul_view_components'
 
