@@ -40,6 +40,7 @@ gem 'bootsnap', require: false
 
 # Additional gems
 gem 'config'
+gem 'sul_view_components', path: '/Users/amcollie/github/sul-dlss/sul_view_components'
 
 group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
