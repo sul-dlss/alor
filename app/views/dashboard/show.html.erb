@@ -6,9 +6,9 @@
       id: 'channels', label: 'Channels', show_label: false
     ) do |component| %>
   <% component.with_header(
-       headers: ['Title', 'Channel ID', 'Last modified', 'Last refreshed']
+       headers: ['Title', 'Channel ID', 'Last modified', 'Link to Channel']
      ) %>
   <% @channels.each do |channel| %>
-    <% component.with_row(values: [channel.title, channel.channel_id, channel.updated_at, channel.updated_at], id: channel.channel_id) %>
+    <% component.with_row(values: [link_to(channel.title, channel_path(channel_id: channel.channel_id)), channel.channel_id, channel.updated_at, link_to_youtube(channel.channel_id)], id: channel.channel_id) %>
   <% end %>
 <% end %>
