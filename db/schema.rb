@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_01_01_010728) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_09_221949) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -29,5 +29,13 @@ ActiveRecord::Schema[8.0].define(version: 2025_01_01_010728) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["email_address"], name: "index_users_on_email_address", unique: true
+  end
+
+  create_table "videos", force: :cascade do |t|
+    t.string "video_id"
+    t.string "title"
+    t.datetime "refresh_job_started_at", precision: nil
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 end
