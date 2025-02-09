@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
-# Model for a Channel.
-class Channel < ApplicationRecord
-  has_many :videos, dependent: :destroy
+# Model for a Video.
+class Video < ApplicationRecord
+  belongs_to :channel
 
   # deposit_job_started_at indicates that the job is queued or running.
   # User should be "waiting" until the job is completed.
