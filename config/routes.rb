@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   resources :channels, only: %i[new create show edit update destroy], param: :channel_id
+  resources :videos, only: %i[new create show edit update destroy], param: :video_id
 
   # Defines the root path route ("/")
   # root "posts#index"

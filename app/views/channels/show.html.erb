@@ -8,3 +8,14 @@
     <% end %>
   <% end %>
 <% end %>
+
+<%= render SulViewComponent::Elements::Tables::TableComponent.new(
+      id: 'videos', label: 'Videos', show_label: false
+    ) do |component| %>
+  <% component.with_header(
+       headers: ['Title', 'Video ID', 'Last modified']
+     ) %>
+  <% @channel.videos.each do |video| %>
+    <% component.with_row(values: [link_to(video.title, video_path(video_id: video.video_id)), video.video_id, video.updated_at], id: video.video_id) %>
+  <% end %>
+<% end %>
