@@ -42,6 +42,7 @@ gem 'bootsnap', require: false
 gem 'action_policy'
 gem 'config'
 gem 'sul_view_components', path: '/Users/amcollie/github/sul-dlss/sul_view_components'
+gem 'google-api-client', require: 'google/apis/youtube_v3'
 
 group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]

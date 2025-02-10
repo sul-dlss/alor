@@ -6,6 +6,8 @@ class ChannelsController < ApplicationController
 
   def show
     authorize! @channel
+    youtube_client = Youtube::Client.new(channel_id: @channel.channel_id)
+    @channel_data = youtube_client.channel_data
   end
 
   def new
