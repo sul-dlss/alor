@@ -9,13 +9,30 @@
   <% end %>
 <% end %>
 
+<div class="d-flex justify-content-between">
+  <div>
+    <%= render SulViewComponent::Elements::HeadingComponent.new(level: :h2, text: @channel.title, classes: 'mb-4 d-inline-block') %>
+  </div>
+  <div class="d-flex justify-content-start">
+    <%= render SulViewComponent::Elements::ButtonLinkComponent.new(link: new_channel_path, label: 'Download Report', variant: :primary, classes: 'mb-4') %>
+  </div>
+</div>
+
 <%= render SulViewComponent::Elements::Tables::TableComponent.new(
-      id: 'videos', label: 'Videos', show_label: false
+      id: 'videos', label: 'Videos', show_label: false, body_classes: 'video_list'
     ) do |component| %>
   <% component.with_header(
-       headers: ['Title', 'Video ID', 'Last modified']
+       headers: ['Video ID', 'Title', 'Duration', 'Views', 'Captioned'] # , 'ASR Languages', 'Edited Languages']
      ) %>
   <% @channel.videos.each do |video| %>
-    <% component.with_row(values: [link_to(video.title, video_path(video_id: video.video_id)), video.video_id, video.updated_at], id: video.video_id) %>
+    <% component.with_row(values: [
+        video.video_id,
+        link_to(video.title, video_path(video_id: video.video_id)),
+        DurationPresenter.new(duration: video.video_data["content_details"]["duration"]).translate,
+        video.video_data["statistics"]["view_count"],
+        video.video_data["content_details"]["caption"]
+      ],
+      id: video.video_id,
+      classes: video.display_class) %>
   <% end %>
 <% end %>

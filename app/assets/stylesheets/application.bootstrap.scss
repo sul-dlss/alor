@@ -107,6 +107,10 @@ html {
 
 // Common to styled tables
 table.table-h3 {
+  .video_list {
+    --bs-table-bg: none;
+  }
+
   caption {
     padding: .25rem;
     font-size: 1.5rem;
@@ -269,4 +273,8 @@ i.icon-xl {
   i {
     color: #D1660F;
   }
+}
+
+.not-captioned {
+  background-color: $yellow-100;
 }

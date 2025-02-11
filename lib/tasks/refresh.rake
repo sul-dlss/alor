@@ -16,7 +16,7 @@ namespace :refresh do
 
     # puts "#{channel.channel_data.items.first.to_h}"
     # puts "#{channel.videos}"
-    channel = Channel.find_by(channel_id: args[:channel_id])
+    channel = Channel.find_or_create_by(channel_id: args[:channel_id], title: "Stanford University Libraries Digital Library Systems & Services")
 
     channel_data = JSON.parse(file)
     channel_data['videos'].each do |video|
