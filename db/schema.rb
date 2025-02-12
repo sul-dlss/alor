@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_02_09_222454) do
+ActiveRecord::Schema[8.0].define(version: 2025_02_12_225115) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -20,6 +20,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_09_222454) do
     t.datetime "refresh_job_started_at", precision: nil
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "data", default: {}
   end
 
   create_table "users", force: :cascade do |t|
@@ -38,6 +39,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_02_09_222454) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "channel_id", null: false
+    t.jsonb "data", default: {}
     t.index ["channel_id"], name: "index_videos_on_channel_id"
   end
 
