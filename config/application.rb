@@ -39,6 +39,10 @@ module Alor
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
+    # Configure MissionControl-Jobs authentication/authorization
+    config.mission_control.jobs.base_controller_class = 'MissionControlAuthorizationController'
+    config.mission_control.jobs.http_basic_auth_enabled = false
+
     # Don't generate system test files.
     config.generators.system_tests = nil
   end

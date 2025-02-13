@@ -19,6 +19,6 @@ class ApplicationController < ActionController::Base
 
   def deny_access
     flash[:warning] = I18n.t('errors.not_authorized')
-    redirect_to :root
+    redirect_to main_app.root_path
   end
 end

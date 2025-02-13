@@ -2,7 +2,7 @@
 
 # Controller for a Channel
 class ChannelsController < ApplicationController
-  before_action :set_channel, only: %i[show edit update destroy]
+  before_action :set_channel, only: %i[show edit update destroy refresh]
 
   attr_reader
   def show
@@ -46,6 +46,12 @@ class ChannelsController < ApplicationController
     else
       render :form, status: :unprocessable_entity
     end
+  end
+
+  def refresh
+    authorize! @channel
+    FetchChannelJob.perform_later(channel_id: @channel.channel_id)
+    redirect_to channel_path( @channel.channel_id)
   end
 
   def destroy
