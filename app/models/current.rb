@@ -5,4 +5,6 @@
 # They can be accessed with Current.user, etc.
 class Current < ActiveSupport::CurrentAttributes
   attribute :user
+  attribute :groups
+  attribute :orcid
 end

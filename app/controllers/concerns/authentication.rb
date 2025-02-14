@@ -16,17 +16,7 @@ module Authentication
   #  - X-Person-Name (first name)
   #  - X-Person-Formal-Name (full name)
 
-  REMOTE_USER_HEADER = 'X-Remote-User'
-  GROUPS_HEADER = 'X-Groups'
-  FIRST_NAME_HEADER = 'X-Person-Name'
-  NAME_HEADER = 'X-Person-Formal-Name'
-
-  # The development environment does not have Shibboleth authentication.
-  # Instead, it will use this hardcoded user.
-  DEV_REMOTE_USER = 'a.user@stanford.edu'
-  DEV_FIRST_NAME = 'A.'
-  DEV_NAME = 'A. User'
-
+  MAX_URL_SIZE = ActionDispatch::Cookies::MAX_COOKIE_SIZE / 2
   SHIBBOLETH_LOGOUT_PATH = '/Shibboleth.sso/Logout'
 
   included do
@@ -35,13 +25,13 @@ module Authentication
     # This will be called for all controller actions.
     # require_authentication will also be called for all controller actions,
     # unless skipped with allow_unauthenticated_access.
-    before_action :authentication, :require_authentication
+    before_action :authentication, :require_authentication, :set_current_groups, :set_current_orcid
     helper_method :authenticated?, :current_user
   end
 
   class_methods do
-    def allow_unauthenticated_access(**options)
-      skip_before_action :require_authentication, **options
+    def allow_unauthenticated_access(**)
+      skip_before_action :require_authentication, **
     end
   end
 
@@ -52,9 +42,9 @@ module Authentication
   private
 
   def remote_user
-    return DEV_REMOTE_USER if Rails.env.development?
+    return Settings.seed_user.email_address if Rails.env.development?
 
-    request.headers[REMOTE_USER_HEADER]
+    request.headers[Settings.http_headers.remote_user]
   end
 
   def authenticated?
@@ -62,6 +52,8 @@ module Authentication
   end
 
   def authentication
+    # This adds the cookie in development/test so that action cable can authenticate.
+    start_new_session if Rails.env.local?
     resume_session
   end
 
@@ -73,8 +65,20 @@ module Authentication
     Current.user ||= User.find_by(email_address: remote_user)
   end
 
+  def set_current_groups
+    Current.groups ||= groups_from_session
+  end
+
+  def set_current_orcid
+    Current.orcid ||= orcid_from_session
+  end
+
   def request_authentication
-    session[:return_to_after_authenticating] = request.url
+    # Always check that we have enough space in the cookie to store the full return URL.
+    #
+    # This situation typically occurs when we are scanned for vulnerabilities and a
+    # CRLF Injection attack is attempted, see https://www.geeksforgeeks.org/crlf-injection-attack/
+    session[:return_to_after_authenticating] = request.url if request.url.size < MAX_URL_SIZE
     redirect_to login_path
   end
 
@@ -89,22 +93,36 @@ module Authentication
     cookies.signed.permanent[:user_id] = { value: results.rows[0][0], httponly: true, same_site: :lax }
   end
 
-  def user_attrs
-    return dev_user_attrs if Rails.env.development?
+  def user_attrs # rubocop:disable Metrics/AbcSize
+    return Settings.seed_user.to_h.except(:orcid_id) if Rails.env.development?
 
     {
-      email_address: request.headers[REMOTE_USER_HEADER],
-      name: request.headers[NAME_HEADER],
-      first_name: request.headers[FIRST_NAME_HEADER]
+      email_address: request.headers[Settings.http_headers.remote_user],
+      name: request.headers[Settings.http_headers.full_name],
+      first_name: request.headers[Settings.http_headers.first_name]
     }
   end
 
-  def dev_user_attrs
-    {
-      email_address: DEV_REMOTE_USER,
-      name: DEV_NAME,
-      first_name: DEV_FIRST_NAME
-    }
+  # This looks first in the session for groups, and then to the headers.
+  # This allows the application session to outlive the shibboleth session
+  def groups_from_session
+    session['groups'] ||= begin
+      raw_header = request.headers[Settings.http_headers.user_groups]
+      roles = ENV.fetch('ROLES', nil)
+      raw_header = roles if Rails.env.development?
+      raw_header&.split(';') || []
+    end
+  end
+
+  # This looks first in the session for orcid ID, and then to the headers.
+  # This allows the application session to outlive the shibboleth session
+  def orcid_from_session
+    session['orcid'] ||= if Rails.env.development?
+                           Settings.seed_user.orcid_id
+                         else
+                           orcid = request.headers[Settings.http_headers.orcid_id]
+                           orcid == '(null)' ? nil : orcid
+                         end
   end
 
   def terminate_session
