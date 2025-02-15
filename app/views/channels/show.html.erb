@@ -22,15 +22,14 @@
       id: 'videos', label: 'Videos', show_label: false, body_classes: 'video_list'
     ) do |component| %>
   <% component.with_header(
-       headers: ['Video ID', 'Title', 'Duration', 'Views', 'Captioned'] # , 'ASR Languages', 'Edited Languages']
+       headers: ['Title', 'Duration', 'Views', 'Captioned'] # , 'ASR Languages', 'Edited Languages']
      ) %>
   <% @channel.videos.each do |video| %>
     <% component.with_row(values: [
-        video.video_id,
         link_to(video.title, video_path(video_id: video.video_id)),
-        DurationPresenter.new(duration: video.video_data["content_details"]["duration"]).translate,
-        video.video_data["statistics"]["view_count"],
-        video.video_data["content_details"]["caption"]
+        DurationPresenter.new(duration: video.duration).translate,
+        video.view_count,
+        video.captioned?
       ],
       id: video.video_id,
       classes: video.display_class) %>

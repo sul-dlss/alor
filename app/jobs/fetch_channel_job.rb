@@ -15,7 +15,7 @@ class FetchChannelJob < ApplicationJob
 
     # puts "#{channel.channel_data.items.first.to_h}"
     # puts "#{channel.videos}"
-    channel = Channel.find_or_create_by(channel_id: args[:channel_id], title: "Stanford University Libraries Digital Library Systems & Services")
+    @channel = Channel.find_or_create_by(channel_id:, title: "Stanford University Libraries Digital Library Systems & Services")
     channel.data = channel_data
     channel.save!
 
@@ -25,14 +25,14 @@ class FetchChannelJob < ApplicationJob
     # end
   end
 
-  attr_reader :channel_id
+  attr_reader :channel_id, :channel
 
   private
 
   def channel_data
-    Rails.cache.fetch("#{cache_key_with_version}/channel_data", expires_in: 7.days) do
+    Rails.cache.fetch("#{channel.cache_key_with_version}/channel_data", expires_in: 7.days) do
       puts "NOT From CACHE: #{channel_id}"
-      JSON.parse(Youtube::Client.new(channel_id:).channel_data)
+      JSON.parse(Youtube::Client.new(channel_id:).channel_data.to_json)
     end
   end
 end

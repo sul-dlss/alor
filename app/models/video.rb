@@ -16,21 +16,38 @@ class Video < ApplicationRecord
 
   def video_data
     data['items'].first
-    # puts "Channel ID: #{channel.channel_id}"
+  end
 
-    # Rails.cache.fetch("#{cache_key_with_version}/video_data", expires_in: 7.days) do
-    #   puts "NOT From CACHE: #{video_id}"
-    #   # JSON.parse(File.read("/Users/amcollie/github/sul-dlss/alor_poc/storage/cache/#{video_id}"))
-    #   JSON.parse(Youtube::Client.new(channel_id:).video_data.to_json)
-    # end
-    #   client = Youtube::Client.new(channel_id: channel.channel_id)
-    #   puts "Video Data: #{client.video_data(id: video_id)}"
-    # rescue Google::Apis::ClientError
-    #   puts "CLIENT ERROR"
+  def video_detail
+    video_data['contentDetails']
+  end
+
+  def statistics
+    video_data['statistics']
+  end
+
+  def captioned?
+    return nil if video_data.nil?
+
+    video_detail["duration"]
+  end
+
+  def duration
+    return nil if video_data.nil?
+
+    video_detail["duration"]
+  end
+
+  def statistics
+    video_data['statistics']
+  end
+
+  def view_count
+    statistics['viewCount']
   end
 
   def display_class
-    video_data["content_details"]["caption"] == "true" ? 'captioned' : 'not-captioned'
+    video_detail["caption"] == "true" ? 'captioned' : 'not-captioned'
   end
 
   def asr_languages

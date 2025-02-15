@@ -4,7 +4,6 @@
 class ChannelsController < ApplicationController
   before_action :set_channel, only: %i[show edit update destroy refresh]
 
-  attr_reader
   def show
     authorize! @channel
     # youtube_client = Youtube::Client.new(channel_id: @channel.channel_id)

@@ -1,0 +1,13 @@
+<% content_for :breadcrumbs do %>
+  <%= render SulViewComponent::Elements::BreadcrumbNavComponent.new do |component| %>
+    <% component.with_breadcrumb(text: 'Dashboard', link: root_path) %>
+    <% component.with_breadcrumb(text: @video.channel.title, link: channel_path(channel_id: @video.channel.channel_id)) %>
+    <% component.with_breadcrumb(text: @video.title, active: true) %>
+  <% end %>
+<% end %>
+
+<div class="d-flex justify-content-between">
+  <div>
+    <%= render SulViewComponent::Elements::HeadingComponent.new(level: :h2, text: @video.title, classes: 'mb-4 d-inline-block') %>
+  </div>
+</div>
