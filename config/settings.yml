@@ -4,3 +4,6 @@ http_headers:
   full_name: 'X-Person-Formal-Name'
   remote_user: 'X-Remote-User'
   orcid_id: 'X-Orcid-Id'
+
+reports:
+  base_path: 'storage/reports'

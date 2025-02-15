@@ -41,6 +41,7 @@ gem 'bootsnap', require: false
 # Additional gems
 gem 'action_policy'
 gem 'config'
+gem 'csv'
 gem 'sul_view_components', path: '/Users/amcollie/github/sul-dlss/sul_view_components'
 gem 'google-api-client', require: 'google/apis/youtube_v3'
 gem 'mission_control-jobs'

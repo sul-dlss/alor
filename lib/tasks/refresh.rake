@@ -45,4 +45,15 @@ namespace :refresh do
       video.save!
     end
   end
+
+  task :list_videos, [:channel_id] => :environment do |_t, args|
+    args.with_defaults(channel_id: Settings.youtube.channel_id)
+    puts "Channel ID: #{args[:channel_id]}"
+    client = Youtube::Client.new(channel_id: args[:channel_id])
+    channel = Channel.find_or_create_by(channel_id: args[:channel_id], title: "Stanford University Libraries Digital Library Systems & Services")
+
+    File.open('tmp/videos.json', 'w') do |f|
+      f.write(JSON.pretty_generate(client.videos))
+    end
+  end
 end
