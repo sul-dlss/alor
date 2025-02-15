@@ -11,3 +11,17 @@
     <%= render SulViewComponent::Elements::HeadingComponent.new(level: :h2, text: @video.title, classes: 'mb-4 d-inline-block') %>
   </div>
 </div>
+
+<%= render SulViewComponent::Elements::Tables::TableComponent.new(id: 'details-table', classes: 'mb-5') do |component| %>
+  <% component.with_caption do %><%= render SulViewComponent::Show::TableHeadingComponent.new(text: 'Details & Statistics') %><% end %>
+  <% component.with_row(label: 'View Count', values: [@video.view_count]) %>
+  <% component.with_row(label: 'Favorite Count', values: [@video.statistics['favoriteCount']]) %>
+  <% component.with_row(label: 'Duration', values: [DurationPresenter.new(duration: @video.duration).translate]) %>
+  <% component.with_row(label: 'Captioned?', values: [@video.captioned?]) %>
+<% end %>
+
+<%= render SulViewComponent::Elements::Tables::TableComponent.new(id: 'debug-table', classes: 'mb-5') do |component| %>
+  <% component.with_caption do %><%= render SulViewComponent::Show::TableHeadingComponent.new(text: 'Debug') %><% end %>
+  <% component.with_row(label: 'Data', values: [@video.video_data]) %>
+  <% component.with_row(label: 'Caption data', values: [@video.caption_data]) %>
+<% end %>

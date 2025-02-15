@@ -29,7 +29,7 @@ class Video < ApplicationRecord
   def captioned?
     return nil if video_data.nil?
 
-    video_detail["duration"]
+    video_detail['caption']
   end
 
   def duration

@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :videos, only: %i[new create show edit update destroy], param: :video_id
+  resources :videos, only: %i[show destroy], param: :video_id
 
   # Defines the root path route ("/")
   # root "posts#index"
