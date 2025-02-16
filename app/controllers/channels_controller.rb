@@ -6,9 +6,6 @@ class ChannelsController < ApplicationController
 
   def show
     authorize! @channel
-    # youtube_client = Youtube::Client.new(channel_id: @channel.channel_id)
-    # @channel_data = youtube_client.channel_data
-    # debugger
   end
 
   def new
@@ -50,7 +47,7 @@ class ChannelsController < ApplicationController
   def refresh
     authorize! @channel
     FetchChannelJob.perform_later(channel_id: @channel.channel_id)
-    redirect_to channel_path( @channel.channel_id)
+    redirect_to channel_path(@channel.channel_id)
   end
 
   def destroy
@@ -77,9 +74,4 @@ class ChannelsController < ApplicationController
   def set_channel
     @channel = Channel.find_by!(channel_id: params[:channel_id])
   end
-
-  # def set_content
-  #   @content = Contents::Builder.call(cocina_object: @cocina_object, user: current_user)
-  #   @work_form.content_id = @content.id
-  # end
 end

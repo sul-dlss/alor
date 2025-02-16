@@ -10,7 +10,7 @@ class VideosController < ApplicationController
 
   def refresh
     authorize! @video
-    # FetchChannelJob.perform_later(channel_id: @channel.channel_id)
+
     redirect_to video_path(@video.video_id)
   end
 
