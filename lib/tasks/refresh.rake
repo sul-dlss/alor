@@ -6,6 +6,13 @@ require 'debug'
 require_relative '../../config/boot'
 
 namespace :refresh do
+  task :channel, [:channel_id] => :environment do |_t, args|
+    args.with_defaults(channel_id: Settings.youtube.channel_id)
+    puts "Channel ID: #{args[:channel_id]}"
+    client = Youtube::Client.new(channel_id: args[:channel_id])
+    client.channel_data
+  end
+
   task :videos, [:channel_id] => :environment do |_t, args|
     args.with_defaults(channel_id: Settings.youtube.channel_id)
     puts "Channel ID: #{args[:channel_id]}"
@@ -54,6 +61,24 @@ namespace :refresh do
 
     File.open('tmp/videos.json', 'w') do |f|
       f.write(JSON.pretty_generate(client.videos))
+    end
+  end
+
+  task :check_videos, [:channel_id] => :environment do |_t, args|
+    args.with_defaults(channel_id: Settings.youtube.channel_id)
+    puts "Channel ID: #{args[:channel_id]}"
+    channel = Channel.find_by(channel_id: args[:channel_id])
+    filename = "tmp/videos.json"
+    file = File.read(filename)
+    videos = JSON.parse(file)
+
+    puts "Videos: #{videos.count}"
+    videos.each do |video|
+      vid = Video.find_by(video_id: video['id']['videoId'])
+      if vid.nil?
+        vid = Video.create!(video_id: video['id']['videoId'], title: video['snippet']['title'], channel:)
+        puts "Video ID: #{vid.video_id} - #{vid.title}"
+      end
     end
   end
 end
