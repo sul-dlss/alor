@@ -18,7 +18,9 @@ module Youtube
     end
 
     def channel_data
-      youtube_client.list_channels('snippet', id:)
+      Rails.cache.fetch("#{@id}/channel_data", expires_in: 7.days) do
+        youtube_client.list_channels('snippet', id:)
+      end
     end
 
     def videos
@@ -33,22 +35,28 @@ module Youtube
       end.flatten
     end
 
-    def video_data(id)
-      youtube_client.list_videos('contentDetails,statistics', id:)
+    def video_data(video_id)
+      Rails.cache.fetch("#{@id}/#{video_id}/channel_data", expires_in: 7.days) do
+        youtube_client.list_videos('contentDetails,statistics', id: video_id)
+      end
     end
 
-    def caption_data(id)
-      youtube_client.list_captions('id,snippet', id)
+    def caption_data(video_id)
+      Rails.cache.fetch("#{@id}/#{video_id}/caption_data", expires_in: 7.days) do
+        youtube_client.list_captions('id,snippet', video_id)
+      end
     end
 
     private
 
     def fetch_videos(page_token:)
-      youtube_client.list_searches('snippet',
-                                   channel_id: id,
-                                   type: 'video',
-                                   video_caption: 'any',
-                                   page_token:)
+      Rails.cache.fetch("#{@id}/#{page_token}/videos", expires_in: 7.days) do
+        youtube_client.list_searches('snippet',
+                                    channel_id: id,
+                                    type: 'video',
+                                    video_caption: 'any',
+                                    page_token:)
+      end
     end
   end
 end
