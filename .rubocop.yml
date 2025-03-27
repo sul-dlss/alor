@@ -21,6 +21,10 @@ AllCops:
     - 'config/environments/*.rb'
     - 'config/routes.rb'
     - 'db/**/*'
+    - 'lib/tasks/**/*'
+
+Metrics/AbcSize:
+  Max: 19
 
 # Offense count: 1
 # Configuration parameters: CountComments, CountAsOne, AllowedMethods, AllowedPatterns.

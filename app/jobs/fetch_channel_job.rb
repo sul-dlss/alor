@@ -7,15 +7,31 @@ class FetchChannelJob < ApplicationJob
     @channel_id = channel_id
 
     @channel = Channel.find_by(channel_id:)
-    channel.data = channel_data
-    channel.save!
+    @channel.data = channel_data
+    @channel.save!
+
+    refresh_videos
   end
 
-  attr_reader :channel_id
+  attr_reader :channel_id, :channel
 
   private
 
+  def client
+    @client ||= Youtube::Client.new(channel_id:)
+  end
+
   def channel_data
-    JSON.parse(Youtube::Client.new(channel_id:).channel_data.to_json)
+    JSON.parse(client.channel_data.to_json)
+  end
+
+  def refresh_videos
+    client.videos.map(&:to_json).each do |video|
+      video = JSON.parse(video)
+      video_id = video['id']['videoId']
+      title = video['snippet']['title']
+      vid = Video.find_or_create_by(video_id:, title:, channel:)
+      FetchVideoJob.perform_later(channel_id:, video_id:) if vid.data.blank?
+    end
   end
 end

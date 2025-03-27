@@ -23,7 +23,7 @@ namespace :refresh do
 
     # puts "#{channel.channel_data.items.first.to_h}"
     # puts "#{channel.videos}"
-    channel = Channel.find_or_create_by(channel_id: args[:channel_id], title: "Stanford University Libraries Digital Library Systems & Services")
+    channel = Channel.find_or_create_by(channel_id: args[:channel_id], title: 'Stanford University Libraries Digital Library Systems & Services')
 
     # Creating from cache
     # channel_data = JSON.parse(file)
@@ -43,9 +43,9 @@ namespace :refresh do
     args.with_defaults(channel_id: Settings.youtube.channel_id)
     puts "Channel ID: #{args[:channel_id]}"
     client = Youtube::Client.new(channel_id: args[:channel_id])
-    channel = Channel.find_or_create_by(channel_id: args[:channel_id], title: "Stanford University Libraries Digital Library Systems & Services")
+    channel = Channel.find_or_create_by(channel_id: args[:channel_id], title: 'Stanford University Libraries Digital Library Systems & Services')
 
-    channel.videos.where(data: {}).each do |video|
+    channel.videos.where(data: {}).find_each do |video|
       puts "Video ID: #{video.video_id} - #{video.title}"
       video.data = JSON.parse(client.video_data(video.video_id).to_json)
       video.caption_data = JSON.parse(client.caption_data(video.video_id).to_json)
@@ -57,7 +57,7 @@ namespace :refresh do
     args.with_defaults(channel_id: Settings.youtube.channel_id)
     puts "Channel ID: #{args[:channel_id]}"
     client = Youtube::Client.new(channel_id: args[:channel_id])
-    channel = Channel.find_or_create_by(channel_id: args[:channel_id], title: "Stanford University Libraries Digital Library Systems & Services")
+    channel = Channel.find_or_create_by(channel_id: args[:channel_id], title: 'Stanford University Libraries Digital Library Systems & Services')
 
     File.open('tmp/videos.json', 'w') do |f|
       f.write(JSON.pretty_generate(client.videos))
@@ -68,7 +68,7 @@ namespace :refresh do
     args.with_defaults(channel_id: Settings.youtube.channel_id)
     puts "Channel ID: #{args[:channel_id]}"
     channel = Channel.find_by(channel_id: args[:channel_id])
-    filename = "tmp/videos.json"
+    filename = 'tmp/videos.json'
     file = File.read(filename)
     videos = JSON.parse(file)
 

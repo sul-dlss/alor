@@ -25,11 +25,16 @@ module Youtube
     end
 
     def caption_report_data
-      [].tap do |data|
-        channel.videos.each do |video|
-          data << [video.video_id, video.title, DurationPresenter.new(duration: video.video_data['contentDetails']['duration']).translate, video.video_data['statistics']['viewCount'],
-                   video.video_data['contentDetails']['caption'], video.asr_languages, video.edited_languages]
-        end
+      channel.videos.map do |video|
+        [
+          video.video_id,
+          video.title,
+          DurationPresenter.new(duration: video.video_data['contentDetails']['duration']).translate,
+          video.video_data['statistics']['viewCount'],
+          video.video_data['contentDetails']['caption'],
+          video.asr_languages,
+          video.edited_languages
+        ]
       end
     end
   end

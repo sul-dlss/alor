@@ -52,10 +52,10 @@ module Youtube
     def fetch_videos(page_token:)
       Rails.cache.fetch("#{@id}/#{page_token}/videos", expires_in: 7.days) do
         youtube_client.list_searches('snippet',
-                                    channel_id: id,
-                                    type: 'video',
-                                    video_caption: 'any',
-                                    page_token:)
+                                     channel_id: id,
+                                     type: 'video',
+                                     video_caption: 'any',
+                                     page_token:)
       end
     end
   end

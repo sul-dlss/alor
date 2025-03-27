@@ -15,39 +15,45 @@ class Video < ApplicationRecord
   end
 
   def video_data
+    return false if data.empty?
+
     data['items'].first
   end
 
   def video_detail
+    return false unless video_data
+
     video_data['contentDetails']
   end
 
-  def statistics
-    video_data['statistics']
-  end
-
   def captioned?
-    return nil if video_data.nil?
+    return false unless video_data
 
     video_detail['caption']
   end
 
   def duration
-    return nil if video_data.nil?
+    return false unless video_data
 
-    video_detail["duration"]
+    video_detail['duration']
   end
 
   def statistics
+    return false unless video_data
+
     video_data['statistics']
   end
 
   def view_count
+    return false unless statistics
+
     statistics['viewCount']
   end
 
   def display_class
-    video_detail["caption"] == "true" ? 'captioned' : 'not-captioned'
+    return false unless video_detail
+
+    video_detail['caption'] == 'true' ? 'captioned' : 'not-captioned'
   end
 
   def asr_languages

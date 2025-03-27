@@ -27,7 +27,7 @@ module Youtube
     end
 
     def report_filename
-      "#{channel_id}-#{Time.now.strftime('%Y%m%d%H%M%S')}.csv"
+      "#{channel_id}-#{Time.zone.now.strftime('%Y%m%d%H%M%S')}.csv"
     end
   end
 end
