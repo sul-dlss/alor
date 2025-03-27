@@ -1,13 +1,16 @@
 <div class="d-flex">
-  <%= render SulViewComponent::Elements::HeadingComponent.new(level: :h2, text: 'DLSS Youtube Channels', classes: 'mb-4 w-100 text-nowrap') %>
-  <%= render SulViewComponent::Elements::ButtonLinkComponent.new(link: new_channel_path, label: 'Add a channel', variant: :primary, classes: 'ml-auto text-nowrap h-50') if allowed_to?(:new?, Channel) %>
+  <%= render Elements::HeadingComponent.new(level: :h2, text: 'DLSS Youtube Channels', classes: 'mb-4 w-100 text-nowrap') %>
+  <%= render Elements::ButtonLinkComponent.new(link: new_channel_path, label: 'Add a channel', variant: :primary, classes: 'ml-auto text-nowrap h-50') if allowed_to?(:new?, Channel) %>
 </div>
 
-<%= render SulViewComponent::Elements::Tables::TableComponent.new(
+<%= render Elements::Tables::TableComponent.new(
       id: 'channels', label: 'Channels', show_label: false
     ) do |component| %>
-  <% component.with_header(
-       headers: ['Title', 'Channel ID', 'Last modified', 'Link to Channel']
+  <% component.with_headers([
+                              { label: 'Title' },
+                              { label: 'Channel ID' },
+                              { label: 'Last modified' },
+                              { label: 'Link to Channel' }]
      ) %>
   <% @channels.each do |channel| %>
     <% component.with_row(values: [link_to(channel.title, channel_path(channel_id: channel.channel_id)), channel.channel_id, channel.updated_at, link_to_youtube(channel.channel_id)], id: channel.channel_id) %>
