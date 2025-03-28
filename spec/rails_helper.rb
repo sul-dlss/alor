@@ -12,10 +12,10 @@ abort('The Rails environment is running in production mode!') if Rails.env.produ
 require 'rspec/rails'
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'webmock/rspec'
-# require 'cyperful/rspec' if ENV['CYPERFUL']
+require 'cyperful/rspec' if ENV['CYPERFUL']
 # For view_component testing
-# require 'view_component/test_helpers'
-# require 'view_component/system_test_helpers'
+require 'view_component/test_helpers'
+require 'view_component/system_test_helpers'
 require 'capybara/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
@@ -40,6 +40,7 @@ begin
 rescue ActiveRecord::PendingMigrationError => e
   abort e.to_s.strip
 end
+
 RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
 
@@ -81,7 +82,7 @@ RSpec.configure do |config|
   WebMock.disable_net_connect!(allow_localhost: true)
 
   # For view_component testing
-  # config.include ViewComponent::TestHelpers, type: :component
-  # config.include ViewComponent::SystemTestHelpers, type: :component
+  config.include ViewComponent::TestHelpers, type: :component
+  config.include ViewComponent::SystemTestHelpers, type: :component
   config.include Capybara::RSpecMatchers, type: :component
 end
