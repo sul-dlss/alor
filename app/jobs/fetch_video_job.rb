@@ -3,9 +3,10 @@
 # Fetch video data and save it to the database
 class FetchVideoJob < ApplicationJob
   # @param [String] video_id: The video id to fetch
-  def perform(channel_id:, video_id:)
-    @channel_id = channel_id
+  # @param [Youtube::Client] client: The YouTube client to use for fetching video data
+  def perform(video_id:, client:)
     @video_id = video_id
+    @client = client
 
     video = Video.find_by(video_id:)
     video.data = video_data
@@ -13,19 +14,15 @@ class FetchVideoJob < ApplicationJob
     video.save!
   end
 
-  attr_reader :channel_id, :video_id
+  attr_reader :video_id, :client
 
   private
 
   def video_data
-    JSON.parse(youtube_client.video_data(video_id).to_json)
+    JSON.parse(client.video_data(video_id).to_json)
   end
 
   def caption_data
-    JSON.parse(youtube_client.caption_data(video_id).to_json)
-  end
-
-  def youtube_client
-    @youtube_client ||= Youtube::Client.new(channel_id:)
+    JSON.parse(client.caption_data(video_id).to_json)
   end
 end
