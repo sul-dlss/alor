@@ -1,2 +1,5 @@
 youtube:
   api_key: 'dummy_api_key'
+
+reports:
+  base_path: 'tmp/test_reports'
