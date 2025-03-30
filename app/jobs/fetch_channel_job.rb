@@ -31,7 +31,7 @@ class FetchChannelJob < ApplicationJob
       video_id = video['id']['videoId']
       title = video['snippet']['title']
       vid = Video.find_or_create_by(video_id:, title:, channel:)
-      FetchVideoJob.perform_later(channel_id:, video_id:) if vid.data.blank?
+      FetchVideoJob.perform_later(channel_id:, video_id:)
     end
   end
 end
