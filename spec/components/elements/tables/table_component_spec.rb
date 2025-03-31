@@ -19,10 +19,11 @@ RSpec.describe Elements::Tables::TableComponent, type: :component do
           label: 'Channels',
           classes: ['my-table-class'],
           body_classes: ['my-table-body-class'],
-          show_label: true).tap do |component|
-            component.with_headers([{ label: 'Header 1' }, { label: 'Header 2' }])
-            # Adding rows to the table
-            component.with_row(values: ['Value 1', 'Value 2'])
+          show_label: true
+        ).tap do |component|
+          component.with_headers([{ label: 'Header 1' }, { label: 'Header 2' }])
+          # Adding rows to the table
+          component.with_row(values: ['Value 1', 'Value 2'])
         end
       )
 

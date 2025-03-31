@@ -6,7 +6,7 @@ RSpec.describe 'Show video', :rack_test do
   # include ActionView::Helpers::SanitizeHelper
 
   context 'when an authorized user views a video' do
-    let(:video) { create(:video, :with_data) }
+    let(:video) { create(:video, data: video_details_fixture) }
     let(:user) { create(:user) }
 
     before do

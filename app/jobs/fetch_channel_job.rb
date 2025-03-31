@@ -30,7 +30,7 @@ class FetchChannelJob < ApplicationJob
       video = JSON.parse(video)
       video_id = video['id']['videoId']
       title = video['snippet']['title']
-      vid = Video.find_or_create_by(video_id:, title:, channel:)
+      Video.find_or_create_by(video_id:, title:, channel:)
       FetchVideoJob.perform_later(video_id:, client:)
     end
   end
