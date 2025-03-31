@@ -21,6 +21,7 @@ AllCops:
     - 'config/routes.rb'
     - 'db/**/*'
     - 'lib/tasks/**/*'
+    - 'vendor/**/*'
 
 Metrics/AbcSize:
   Max: 19
