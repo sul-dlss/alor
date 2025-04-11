@@ -8,12 +8,6 @@ class VideosController < ApplicationController
     authorize! @video
   end
 
-  def refresh
-    authorize! @video
-
-    redirect_to video_path(@video.video_id)
-  end
-
   def destroy
     authorize! @video
 

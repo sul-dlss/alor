@@ -10,7 +10,7 @@ RSpec.describe 'Show channel', :rack_test do
     let(:user) { create(:user) }
 
     before do
-      sign_in(user)
+      sign_in(user, groups: [Settings.authorization_workgroup_names.administrators])
     end
 
     it 'displays the dashboard' do

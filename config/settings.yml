@@ -6,3 +6,7 @@ http_headers:
 
 reports:
   base_path: 'storage/reports'
+
+# mappings from authorization role to workgroup name
+authorization_workgroup_names:
+  administrators: 'dlss:hydrus-app-administrators'

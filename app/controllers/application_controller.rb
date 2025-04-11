@@ -10,15 +10,6 @@ class ApplicationController < ActionController::Base
   # See https://actionpolicy.evilmartians.io/#/rails?id=verify_authorized-hooks for how to skip.
   verify_authorized
 
-  rescue_from ActionPolicy::Unauthorized, with: :deny_access
-
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   allow_browser versions: :modern
-
-  private
-
-  def deny_access
-    flash[:warning] = I18n.t('errors.not_authorized')
-    redirect_to main_app.root_path
-  end
 end
