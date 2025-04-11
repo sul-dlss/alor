@@ -53,16 +53,16 @@ class Video < ApplicationRecord
   def display_class
     return false unless video_detail
 
-    video_detail['caption'] == 'true' ? 'captioned' : 'not-captioned'
+    captioned? ? 'captioned' : 'not-captioned'
   end
 
   def asr_languages
-    asr_caption_tracks = caption_data['items'].select { |caption| caption['snippet']['track_kind'] == 'asr' }
+    asr_caption_tracks = caption_data['items'].select { |caption| caption['snippet']['trackKind'] == 'asr' }
     asr_caption_tracks.map { |caption| caption['snippet']['language'] }.join(', ')
   end
 
   def edited_languages
-    edited_caption_tracks = caption_data['items'].reject { |caption| caption['snippet']['track_kind'] == 'asr' }
+    edited_caption_tracks = caption_data['items'].reject { |caption| caption['snippet']['trackKind'] == 'asr' }
     edited_caption_tracks.map { |caption| caption['snippet']['language'] }.join(', ')
   end
 end
