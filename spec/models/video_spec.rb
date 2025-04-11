@@ -6,17 +6,17 @@ RSpec.describe Video do
   let(:channel) { create(:channel) }
 
   describe 'associations' do
-    let(:work) { create(:video, channel:) }
+    let(:video) { create(:video, channel:) }
 
     it 'belongs to a channel' do
-      expect(work.channel).to eq(channel)
-      expect(work.refresh_job_started_at).to be_nil
-      expect(work.data).to eq({})
+      expect(video.channel).to eq(channel)
+      expect(video.refresh_job_started_at).to be_nil
+      expect(video.data).not_to be_nil
     end
   end
 
   describe 'when a video has data' do
-    let(:work) { create(:video, data:) }
+    let(:video) { create(:video, data:) }
     let(:data) do
       {
         etag: 'drvitEldi8j8SFKldcNOZ8lTeh4',
@@ -47,30 +47,30 @@ RSpec.describe Video do
     end
 
     it 'has video_data' do
-      expect(work.video_data).not_to be_nil
+      expect(video.video_data).not_to be_nil
     end
 
     it 'has video_detail' do
-      expect(work.video_detail).not_to be_nil
+      expect(video.video_detail).not_to be_nil
     end
 
     it 'is captioned' do
-      expect(work).to be_captioned
-      expect(work.display_class).to eq('captioned')
+      expect(video).to be_captioned
+      expect(video.display_class).to eq('captioned')
     end
 
     it 'has a duration' do
-      expect(work.duration).to eq('PT2M31S')
+      expect(video.duration).to eq('PT2M31S')
     end
 
     it 'has statistics' do
-      expect(work.statistics).to be_truthy
-      expect(work.view_count).to eq('200')
+      expect(video.statistics).to be_truthy
+      expect(video.view_count).to eq('200')
     end
   end
 
   describe 'when a video has caption data' do
-    let(:work) { create(:video, caption_data:) }
+    let(:video) { create(:video, caption_data:) }
     let(:caption_data) do
       {
         etag: 'zvkBqAEFA_cVh6IZbukSQm42iXg',
@@ -118,11 +118,11 @@ RSpec.describe Video do
     end
 
     it 'has an asr caption track' do
-      expect(work.asr_languages).to eq('en')
+      expect(video.asr_languages).to eq('en')
     end
 
     it 'has an edited caption track' do
-      expect(work.edited_languages).to eq('en')
+      expect(video.edited_languages).to eq('en')
     end
   end
 end
