@@ -2,7 +2,7 @@
 
 # Controller for a Video
 class VideosController < ApplicationController
-  before_action :set_video, only: %i[show destroy refresh]
+  before_action :set_video, only: %i[show destroy]
 
   def show
     authorize! @video

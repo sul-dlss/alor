@@ -17,8 +17,6 @@ RSpec.describe 'Show channel', :rack_test do
       visit channel_path(channel.channel_id)
 
       expect(page).to have_css('h2', text: channel.title)
-      # expect(page).to have_text(channel.title)
-      # expect(page).to have_text(channel.channel_id)
     end
   end
 end
