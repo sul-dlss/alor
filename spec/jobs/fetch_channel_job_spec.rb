@@ -19,6 +19,7 @@ RSpec.describe FetchChannelJob do
   context 'when fetching data for a new channel' do
     it 'populates channel data' do
       expect(channel.data).to eq({}) # Ensure the channel starts with no data
+      expect(channel.refresh_job_started_at).to be_nil
       described_class.perform_now(channel_id: channel.channel_id)
       expect(Youtube::Client).to have_received(:new).with(channel_id: channel.channel_id)
       expect(channel.reload.data).to eq(channel_data)

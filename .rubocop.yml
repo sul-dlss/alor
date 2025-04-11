@@ -41,6 +41,8 @@ Metrics/CyclomaticComplexity:
 # Configuration parameters: CountComments, CountAsOne, AllowedMethods, AllowedPatterns.
 Metrics/MethodLength:
   Max: 12
+  Exclude:
+   - 'spec/support/**/*'
 
 # Offense count: 1
 # Configuration parameters: AllowedMethods, AllowedPatterns.

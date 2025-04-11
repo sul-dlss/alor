@@ -7,10 +7,12 @@ class FetchChannelJob < ApplicationJob
     @channel_id = channel_id
 
     @channel = Channel.find_by(channel_id:)
-    @channel.data = channel_data
-    @channel.save!
+    Channel.update(@channel.id, refresh_job_started_at: Time.zone.now)
+    Channel.update(@channel.id, data: channel_data)
 
     refresh_videos
+
+    Channel.update(@channel.id, refresh_job_started_at: nil)
   end
 
   attr_reader :channel_id, :channel
