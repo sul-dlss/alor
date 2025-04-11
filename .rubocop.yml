@@ -74,6 +74,9 @@ Style/IfUnlessModifier:
 Layout/LineLength:
   Max: 198
 
+RSpec/MultipleMemoizedHelpers:
+  Max: 6
+
 Gemspec/AddRuntimeDependency: # new in 1.65
   Enabled: true
 Gemspec/DeprecatedAttributeAssignment: # new in 1.30

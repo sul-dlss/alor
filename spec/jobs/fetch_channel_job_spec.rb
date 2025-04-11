@@ -10,10 +10,7 @@ RSpec.describe FetchChannelJob do
 
   before do
     allow(Youtube::Client).to receive(:new).with(channel_id: channel.channel_id).and_return(youtube_client)
-    allow(youtube_client).to receive(:channel_data).and_return(channel_data)
-    allow(youtube_client).to receive(:videos).and_return(videos)
-    allow(youtube_client).to receive(:video_data)
-    allow(youtube_client).to receive(:caption_data)
+    allow(youtube_client).to receive_messages(channel_data:, videos:, video_data: nil, caption_data: nil)
   end
 
   context 'when fetching data for a new channel' do

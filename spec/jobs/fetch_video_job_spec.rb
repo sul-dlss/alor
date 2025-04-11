@@ -9,8 +9,7 @@ RSpec.describe FetchVideoJob do
 
   before do
     allow(Youtube::Client).to receive(:new).with(channel_id: channel.channel_id).and_return(client)
-    allow(client).to receive(:video_data).and_return(video.data)
-    allow(client).to receive(:caption_data)
+    allow(client).to receive_messages(video_data: video.data, caption_data: nil)
   end
 
   context 'when fetching data for a new video' do

@@ -3,7 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Youtube::ReportWriter do
-  let(:subject) { described_class.new(channel_id:, headers:, data:) }
+  subject(:report_writer) { described_class.new(channel_id:, headers:, data:) }
+
   let(:channel_id) { 'UC1234567890' }
   let(:headers) { ['Title', 'Description', 'Published At'] }
   let(:data) do
@@ -21,7 +22,7 @@ RSpec.describe Youtube::ReportWriter do
 
     before do
       allow(Time.zone.now).to receive(:strftime).and_return(report_timestamp)
-      subject.write_report
+      report_writer.write_report
     end
 
     it 'writes a CSV report' do
