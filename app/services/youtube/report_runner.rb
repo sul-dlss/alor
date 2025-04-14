@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'debug'
-
 module Youtube
   # ReportRunner runs the selected report for the YouTube channel
   class ReportRunner

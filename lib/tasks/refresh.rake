@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'config'
-require 'debug'
 
 require_relative '../../config/boot'
 

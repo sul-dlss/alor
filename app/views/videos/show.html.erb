@@ -19,9 +19,3 @@
   <% component.with_row(label: 'Duration', values: [DurationPresenter.new(duration: @video.duration).translate]) %>
   <% component.with_row(label: 'Captioned?', values: [@video.captioned?]) %>
 <% end %>
-
-<%= render Elements::Tables::TableComponent.new(id: 'debug-table', classes: 'mb-5') do |component| %>
-  <% component.with_caption do %><%= render Show::TableHeadingComponent.new(text: 'Debug') %><% end %>
-  <% component.with_row(label: 'Data', values: [@video.video_data]) %>
-  <% component.with_row(label: 'Caption data', values: [@video.caption_data]) %>
-<% end %>
