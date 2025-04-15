@@ -2,9 +2,9 @@
 
 # Controller for the user dashboard
 class DashboardController < ApplicationController
-  def show
-    authorize! :dashboard
+  skip_verify_authorized only: :show
 
+  def show
     @channels = Channel.all
   end
 end
