@@ -41,10 +41,15 @@ gem 'bootsnap', require: false
 
 # Additional gems
 gem 'action_policy'
+gem 'bunny'
 gem 'config'
 gem 'csv'
 gem 'google-api-client', require: 'google/apis/youtube_v3'
+gem 'honeybadger'
+gem 'kicks'
+gem 'okcomputer'
 gem 'view_component'
+gem 'whenever', require: false
 
 group :development, :test do
   # Static analysis for security vulnerabilities [https://brakemanscanner.org/]
