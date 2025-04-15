@@ -68,19 +68,19 @@ set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
 set :whenever_roles, [:scheduler]
 
 # Manage sneakers via systemd (from dlss-capistrano gem)
-set :sneakers_systemd_use_hooks, true
+# set :sneakers_systemd_use_hooks, true
 
-namespace :rabbitmq do
-  desc 'Runs rake rabbitmq:setup'
-  task setup: ['deploy:set_rails_env'] do
-    on roles(fetch(:sneakers_systemd_role)) do
-      within release_path do
-        with rails_env: fetch(:rails_env) do
-          execute :rake, 'rabbitmq:setup'
-        end
-      end
-    end
-  end
+# namespace :rabbitmq do
+#   desc 'Runs rake rabbitmq:setup'
+#   task setup: ['deploy:set_rails_env'] do
+#     on roles(fetch(:sneakers_systemd_role)) do
+#       within release_path do
+#         with rails_env: fetch(:rails_env) do
+#           execute :rake, 'rabbitmq:setup'
+#         end
+#       end
+#     end
+#   end
 
-  before 'sneakers_systemd:start', 'rabbitmq:setup'
-end
+#   before 'sneakers_systemd:start', 'rabbitmq:setup'
+# end
