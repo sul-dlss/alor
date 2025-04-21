@@ -3,14 +3,14 @@
 module MissionControl
   module Jobs
     # Policy for managing mission control access to queues in the application
-    class QueuesPolicy < ActionPolicy::Base
-      alias_rule :show?, :index?, to: :manage?
+    class QueuesPolicy < ApplicationPolicy
+      # @note These two rule macros effectively forward all rules to #manage?
+      # @see https://actionpolicy.evilmartians.io/#/aliases?id=default-rule
+      default_rule :manage?
+      alias_rule :index?, :create?, :new?, to: :manage?
 
       def manage?
-        true
-        #   ::Current.groups.include?(
-        #     Settings.authorization_workgroup_names.administrators
-        #   )
+        admin?
       end
     end
   end
