@@ -2,6 +2,8 @@
 
 # Fetch channel data and save it to the database
 class FetchChannelJob < ApplicationJob
+  retry_on Google::Apis::ClientError, wait: 24.hours, attempts: 3
+
   # @param [String] channel_id: The channel id to fetch
   def perform(channel_id:)
     @channel_id = channel_id

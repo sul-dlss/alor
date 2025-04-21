@@ -2,6 +2,8 @@
 
 # Fetch video data and save it to the database
 class FetchVideoJob < ApplicationJob
+  retry_on Google::Apis::ClientError, wait: 24.hours, attempts: 3
+
   # @param [String] video_id: The video id to fetch
   # @param [Youtube::Client] client: The YouTube client to use for fetching video data
   def perform(video_id:, title:, channel_id:)
