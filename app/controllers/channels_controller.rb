@@ -9,6 +9,7 @@ class ChannelsController < ApplicationController
   end
 
   def new
+    authorize Channel
     @channel_form = ChannelForm.new
 
     render :form
@@ -21,6 +22,7 @@ class ChannelsController < ApplicationController
   end
 
   def create
+    authorize Channel
     @channel_form = ChannelForm.new(**channel_params)
 
     if @channel_form.valid?(save: save?)
