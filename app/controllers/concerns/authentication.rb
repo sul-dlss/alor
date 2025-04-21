@@ -25,7 +25,7 @@ module Authentication
     # This will be called for all controller actions.
     # require_authentication will also be called for all controller actions,
     # unless skipped with allow_unauthenticated_access.
-    before_action :authentication, :require_authentication, :set_current_groups, :set_current_orcid
+    before_action :authentication, :require_authentication, :set_current_groups
     helper_method :authenticated?, :current_user
   end
 
@@ -67,10 +67,6 @@ module Authentication
 
   def set_current_groups
     Current.groups ||= groups_from_session
-  end
-
-  def set_current_orcid
-    Current.orcid ||= orcid_from_session
   end
 
   def request_authentication
