@@ -9,7 +9,7 @@ class ChannelsController < ApplicationController
   end
 
   def new
-    authorize Channel
+    authorize! Channel
     @channel_form = ChannelForm.new
 
     render :form
@@ -22,11 +22,12 @@ class ChannelsController < ApplicationController
   end
 
   def create
-    authorize Channel
+    authorize! Channel
     @channel_form = ChannelForm.new(**channel_params)
 
     if @channel_form.valid?(save: save?)
-      channel = Channel.create!(channel_id: @channel_form.channel_id, title: @channel_form.title)
+      channel = Channel.create!(channel_id: @channel_form.channel_id)
+      FetchChannelJob.perform_later(channel_id: @channel_form.channel_id)
       redirect_to channels_path(channel.id)
     else
       render :form, status: :unprocessable_entity

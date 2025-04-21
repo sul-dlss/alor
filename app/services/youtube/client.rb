@@ -37,7 +37,7 @@ module Youtube
 
     def video_data(video_id)
       Rails.cache.fetch("#{@id}/#{video_id}/channel_data", expires_in: 7.days) do
-        youtube_client.list_videos('contentDetails,statistics', id: video_id)
+        youtube_client.list_videos('snippet,contentDetails,statistics', id: video_id)
       end
     end
 

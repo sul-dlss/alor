@@ -6,16 +6,15 @@ class FetchChannelJob < ApplicationJob
   def perform(channel_id:)
     @channel_id = channel_id
 
-    @channel = Channel.find_by(channel_id:)
-    Channel.update(@channel.id, refresh_job_started_at: Time.zone.now)
-    Channel.update(@channel.id, data: channel_data)
-
+    @refresh_job_started_at = Time.zone.now
+    results = Channel.upsert(channel_attrs, unique_by: :channel_id)
     refresh_videos
 
-    Channel.update(@channel.id, refresh_job_started_at: nil)
+    @refresh_job_started_at = nil
+    results = Channel.upsert(channel_attrs, unique_by: :channel_id)
   end
 
-  attr_reader :channel_id, :channel
+  attr_reader :channel_id, :refresh_job_started_at
 
   private
 
@@ -32,8 +31,15 @@ class FetchChannelJob < ApplicationJob
       video = JSON.parse(video)
       video_id = video['id']['videoId']
       title = video['snippet']['title']
-      Video.find_or_create_by(video_id:, title:, channel:)
-      FetchVideoJob.perform_later(video_id:, client:)
+      FetchVideoJob.perform_later(video_id:, title:, channel_id:)
     end
+  end
+
+  def channel_attrs
+    {
+      channel_id:,
+      title: channel_data['items'].first['snippet']['title'],
+      data: channel_data
+    }
   end
 end
