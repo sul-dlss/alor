@@ -12,8 +12,6 @@ class ApplicationPolicy < ActionPolicy::Base
   private
 
   def admin?
-    Current.user&.admin? ||
-    Current.groups.include?(Settings.authorization_workgroup_names.administrators) ||
-      Current.groups.include?(Settings.authorization_workgroup_names.collection_creators)
+    Current.user&.admin? || Current.groups.include?(Settings.authorization_workgroup_names.administrators)
   end
 end

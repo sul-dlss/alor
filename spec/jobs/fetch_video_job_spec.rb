@@ -13,9 +13,11 @@ RSpec.describe FetchVideoJob do
   end
 
   context 'when fetching data for a new video' do
+    let(:title) { video_title_fixture }
+
     it 'populates video data' do
       # expect(channel.data).to eq({}) # Ensure the channel starts with no data
-      described_class.perform_now(video_id: video.video_id, client:)
+      described_class.perform_now(video_id: video.video_id, title:, channel_id: channel.channel_id)
       expect(video.reload.data).to eq(video.data)
     end
   end

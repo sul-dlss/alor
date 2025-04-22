@@ -9,11 +9,14 @@ class FetchChannelJob < ApplicationJob
     @channel_id = channel_id
 
     @refresh_job_started_at = Time.zone.now
-    results = Channel.upsert(channel_attrs, unique_by: :channel_id)
+    channel = Channel.find_by(channel_id:)
+    return unless channel
+
+    channel.update(channel_attrs)
     refresh_videos
 
     @refresh_job_started_at = nil
-    results = Channel.upsert(channel_attrs, unique_by: :channel_id)
+    channel.update(channel_attrs)
   end
 
   attr_reader :channel_id, :refresh_job_started_at
@@ -39,9 +42,9 @@ class FetchChannelJob < ApplicationJob
 
   def channel_attrs
     {
-      channel_id:,
       title: channel_data['items'].first['snippet']['title'],
-      data: channel_data
+      data: channel_data,
+      refresh_job_started_at:
     }
   end
 end

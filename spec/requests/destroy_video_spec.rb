@@ -11,11 +11,11 @@ RSpec.describe 'Destroy Video' do
     end
 
     it 'destroys the video' do
-      expect(Video.exists?(video.id)).to be_truthy
+      expect(Video.where(video_id: video.video_id)).to exist
       delete "/videos/#{video.video_id}"
 
       expect(response).to have_http_status(:found)
-      expect(Video.exists?(video.id)).to be_falsey
+      expect(Video.where(video_id: video.video_id)).not_to exist
     end
   end
 end

@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :channel do
-    channel_id { channel_id_fixture }
+    sequence(:channel_id) { |n| "#{channel_id_fixture}-#{n}" }
     title { channel_title_fixture }
 
     trait :with_videos do

@@ -12,7 +12,8 @@ class FetchVideoJob < ApplicationJob
     @channel_id = channel_id
     return unless channel
 
-    Video.upsert(video_attrs, unique_by: :video_id)
+    video = Video.find_or_create_by(video_id:)
+    video.update(video_attrs)
   end
 
   attr_reader :video_id, :title, :channel_id
@@ -37,7 +38,6 @@ class FetchVideoJob < ApplicationJob
 
   def video_attrs
     {
-      video_id:,
       title:,
       data:,
       caption_data:,

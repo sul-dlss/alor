@@ -9,5 +9,4 @@ class ChannelPolicy < ApplicationPolicy
   def create?
     admin?
   end
-
 end
