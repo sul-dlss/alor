@@ -6,5 +6,6 @@ class DashboardController < ApplicationController
 
   def show
     @channels = Channel.all
+    @reports = Report.all
   end
 end
