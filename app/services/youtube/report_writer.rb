@@ -18,6 +18,8 @@ module Youtube
         csv << headers
         data.each { |row| csv << row }
       end
+
+      report_filepath
     end
 
     private
