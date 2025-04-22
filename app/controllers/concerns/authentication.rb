@@ -102,11 +102,8 @@ module Authentication
   # This looks first in the session for groups, and then to the headers.
   # This allows the application session to outlive the shibboleth session
   def groups_from_session
-    logger.info "Groups session: #{session['groups']}"
-    logger.info "Request headers: #{request.headers.to_s}"
     session['groups'] ||= begin
       raw_header = request.headers[Settings.http_headers.user_groups]
-      logger.info "Groups header: #{raw_header}"
       roles = ENV.fetch('ROLES', nil)
       raw_header = roles if Rails.env.development?
       raw_header&.split(';') || []
