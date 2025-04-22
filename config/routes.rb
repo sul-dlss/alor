@@ -15,7 +15,7 @@ Rails.application.routes.draw do
 
   resources :channels, only: %i[new create show edit update destroy], param: :channel_id do
     member do
-      get :refresh
+      get :report
     end
   end
 

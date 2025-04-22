@@ -3,29 +3,10 @@
   <%= render Elements::ButtonLinkComponent.new(link: new_channel_path, label: 'Add a channel', variant: :primary, classes: 'ml-auto text-nowrap h-50') if allowed_to?(:new?, Channel) %>
 </div>
 
-<%= render Elements::Tables::TableComponent.new(
-      id: 'channels', label: 'Channels', show_label: false
-    ) do |component| %>
-  <% component.with_headers([
-                              { label: 'Title' },
-                              { label: 'Channel ID' },
-                              { label: 'Last modified' },
-                              { label: 'Link to Channel' }]
-     ) %>
-  <% @channels.each do |channel| %>
-    <% component.with_row(values: [link_to(channel.title, channel_path(channel_id: channel.channel_id)), channel.channel_id, channel.updated_at, link_to_youtube(channel.channel_id)], id: channel.channel_id) %>
-  <% end %>
-<% end %>
-
-<%= render Elements::Tables::TableComponent.new(
-      id: 'reports', label: 'Reports', show_label: true
-    ) do |component| %>
-  <% component.with_headers([
-                              { label: 'Channel ID' },
-                              { label: 'Date' },
-                              { label: 'File' }]
-     ) %>
-  <% @reports.each do |report| %>
-    <% component.with_row(values: [report.channel_id, report.created_at, link_to(report.file.filename, rails_blob_path(report.file.blob, disposition: 'attachment'))], id: report.id) %>
-  <% end %>
+<% @channels.each do |channel| %>
+  <div class="mb-5">
+    <%= render Channels::HeaderLinkComponent.new(channel:) %>
+    <%= render Dashboard::Show::VideosListComponent.new(channel:) %>
+    <%= render Dashboard::Show::ReportsListComponent.new(channel:) %>
+  </div>
 <% end %>

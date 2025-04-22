@@ -29,7 +29,6 @@ RSpec.describe 'Show dashboard', :rack_test do
 
       expect(page).to have_css('h2', text: 'DLSS Youtube Channels')
       expect(page).to have_text(channel.title)
-      expect(page).to have_text(channel.channel_id)
     end
   end
 end

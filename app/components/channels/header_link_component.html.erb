@@ -1,0 +1,3 @@
+<%= link_to channel_path(@channel.channel_id) do %>
+  <%= render Elements::HeadingComponent.new(level:, text: @channel.title, classes:) %>
+<% end %>

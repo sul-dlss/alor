@@ -2,7 +2,7 @@
 
 # Controller for a Channel
 class ChannelsController < ApplicationController
-  before_action :set_channel, only: %i[show edit update destroy refresh]
+  before_action :set_channel, only: %i[show edit update destroy report]
 
   def show
     authorize! @channel
@@ -47,10 +47,10 @@ class ChannelsController < ApplicationController
     end
   end
 
-  def refresh
+  def report
     authorize! @channel
-    FetchChannelJob.perform_later(channel_id: @channel.channel_id)
-    redirect_to channel_path(@channel.channel_id)
+    ChannelReportJob.perform_later(channel_id: @channel.channel_id)
+    redirect_to root_path
   end
 
   def destroy

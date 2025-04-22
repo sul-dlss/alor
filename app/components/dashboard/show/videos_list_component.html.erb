@@ -1,0 +1,15 @@
+<%= render Elements::Tables::TableComponent.new(
+      id:, label:, show_label: true,
+      empty_message: 'Videos have not been loaded for this collection.'
+    ) do |component| %>
+    <% component.with_headers([
+                                { label: 'Title' },
+                                { label: 'Duration' },
+                                { label: 'Views' },
+                                { label: 'Captioned' },
+                                { label: 'Updated' }
+                              ]) %>
+  <% videos.take(VIDEO_LIMIT).each do |video| %>
+    <% component.with_row(values: values_for(video), id: id_for(video)) %>
+  <% end %>
+<% end %>
