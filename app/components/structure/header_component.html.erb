@@ -43,29 +43,6 @@
             <%= link_to helpers.t('app_name'), root_path %>
           </div>
         </div>
-        <div class="navbars ms-md-auto">
-          <nav
-            class="collapse navbar-collapse align-items-start justify-content-md-end navbar-expand-md d-md-flex flex-column flex-md-row"
-            aria-label="browse"
-            id="user-util-collapse">
-            <hr class="d-md-none vw-100 my-0">
-            <ul
-              class="navbar-nav justify-content-md-end gap-0 gap-md-4 w-100 fw-semibold">
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#contact-form-modal"><%= t('contact_sdr') %></a>
-              </li>
-              <%= render Elements::NavLinkComponent.new(title: 'Help', path: 'https://sdr.library.stanford.edu/documentation') %>
-              <%= render Elements::NavLinkComponent.new(title: 'Why SDR?', path: 'https://sdr.library.stanford.edu/') %>
-              <li class="nav-item">
-                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#tod-modal">Terms of Deposit</a>
-              </li>
-            </ul>
-            <hr class="d-md-none vw-100 my-0">
-            <ul class="navbar-nav d-md-none gap-0 w-100">
-              <%= render Structure::LoginMenuComponent.new %>
-            </ul>
-          </nav>
-        </div>
       </div>
     </div>
   </div>
