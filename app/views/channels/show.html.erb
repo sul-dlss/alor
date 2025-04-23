@@ -22,20 +22,19 @@
       id: 'videos', label: 'Videos', show_label: false, body_classes: 'video_list'
     ) do |component| %>
   <% component.with_headers([
-                             { label: 'Title' },
-                             { label: 'Duration' },
-                             { label: 'Views' },
-                             { label: 'Captioned' },
-                             { label: 'Updated' }]
-     ) %>
+                              { label: 'Title' },
+                              { label: 'Duration' },
+                              { label: 'Views' },
+                              { label: 'Captioned' },
+                              { label: 'Updated' }
+                            ]) %>
   <% @channel.videos.each do |video| %>
     <% component.with_row(values: [
-        link_to(video.title, video_path(video_id: video.video_id)),
-        DurationPresenter.new(duration: video.duration).translate,
-        video.view_count,
-        video.captioned?,
-        video.updated_at.strftime('%m/%d/%Y')
-      ],
-      id: video.video_id) %>
+                            link_to(video.title, video_path(video_id: video.video_id)),
+                            DurationPresenter.new(duration: video.duration).translate,
+                            video.view_count,
+                            video.captioned?,
+                            video.updated_at.strftime('%m/%d/%Y')
+                          ], id: video.video_id) %>
   <% end %>
 <% end %>
