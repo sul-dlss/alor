@@ -48,4 +48,3 @@ config/environments/*.local.yml
 # Ignore the generated honeybadger config (for now)
 # TODO: Determine if we want to use this new config file
 /config/honeybadger.yml
-
