@@ -19,7 +19,7 @@ module Youtube
     private
 
     def caption_report_headers
-      ['Video ID', 'Title', 'Duration', 'Views', 'Captioned', 'ASR Languages', 'Edited Languages']
+      ['Video ID', 'Title', 'Duration', 'Views', 'Captioned', 'ASR Languages', 'Edited Languages', 'Uploaded At']
     end
 
     def caption_report_data
@@ -31,7 +31,8 @@ module Youtube
           video.video_data['statistics']['viewCount'],
           video.video_data['contentDetails']['caption'],
           video.asr_languages,
-          video.edited_languages
+          video.edited_languages,
+          video.updated_at
         ]
       end
     end
