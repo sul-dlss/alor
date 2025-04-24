@@ -22,7 +22,7 @@ module Youtube
       ['Video ID', 'Title', 'Duration', 'Views', 'Captioned', 'ASR Languages', 'Edited Languages', 'Uploaded At']
     end
 
-    def caption_report_data
+    def caption_report_data # rubocop:disable Metrics/AbcSize
       channel.videos.map do |video|
         [
           video.video_id,

@@ -6,9 +6,10 @@ class FetchVideoJob < ApplicationJob
 
   # @param [String] video_id: The video id to fetch
   # @param [Youtube::Client] client: The YouTube client to use for fetching video data
-  def perform(video_id:, title:, channel_id:)
+  def perform(video_id:, title:, published_date:, channel_id:)
     @video_id = video_id
     @title = title
+    @published_date = published_date
     @channel_id = channel_id
     return unless channel
 
@@ -16,7 +17,7 @@ class FetchVideoJob < ApplicationJob
     video.update(video_attrs)
   end
 
-  attr_reader :video_id, :title, :channel_id
+  attr_reader :video_id, :title, :published_date, :channel_id
 
   private
 
@@ -39,6 +40,7 @@ class FetchVideoJob < ApplicationJob
   def video_attrs
     {
       title:,
+      published_date:,
       data:,
       caption_data:,
       channel_id: channel.id

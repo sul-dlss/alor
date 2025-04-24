@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_22_195206) do
+ActiveRecord::Schema[8.0].define(version: 2025_04_24_163105) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -77,6 +77,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_22_195206) do
     t.bigint "channel_id", null: false
     t.jsonb "data", default: {}
     t.jsonb "caption_data", default: {}
+    t.datetime "published_date"
     t.index ["channel_id"], name: "index_videos_on_channel_id"
     t.index ["video_id"], name: "index_videos_on_video_id", unique: true
   end
