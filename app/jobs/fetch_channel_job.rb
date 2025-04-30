@@ -36,7 +36,7 @@ class FetchChannelJob < ApplicationJob
       video = JSON.parse(video)
       video_id = video['id']['videoId']
       title = video['snippet']['title']
-      published_date = video['snippet']['published_at']
+      published_date = video['snippet']['publishedAt']
       FetchVideoJob.perform_later(video_id:, title:, published_date:, channel_id:)
     end
   end
