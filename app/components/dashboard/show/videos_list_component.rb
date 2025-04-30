@@ -31,7 +31,7 @@ module Dashboard
           DurationPresenter.new(duration: video.duration).translate,
           video.view_count,
           video.captioned?,
-          video.updated_at.strftime('%m/%d/%Y')
+          video.published_date&.strftime('%m/%d/%Y')
         ]
       end
 

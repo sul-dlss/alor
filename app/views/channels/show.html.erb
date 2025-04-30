@@ -26,7 +26,7 @@
                               { label: 'Duration' },
                               { label: 'Views' },
                               { label: 'Captioned' },
-                              { label: 'Updated' }
+                              { label: 'Published' }
                             ]) %>
   <% @channel.videos.each do |video| %>
     <% component.with_row(values: [
@@ -34,7 +34,7 @@
                             DurationPresenter.new(duration: video.duration).translate,
                             video.view_count,
                             video.captioned?,
-                            video.updated_at.strftime('%m/%d/%Y')
+                            video.published_date&.strftime('%m/%d/%Y')
                           ], id: video.video_id) %>
   <% end %>
 <% end %>

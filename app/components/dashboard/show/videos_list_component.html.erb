@@ -7,7 +7,7 @@
                                 { label: 'Duration' },
                                 { label: 'Views' },
                                 { label: 'Captioned' },
-                                { label: 'Updated' }
+                                { label: 'Published' }
                               ]) %>
   <% videos.take(VIDEO_LIMIT).each do |video| %>
     <% component.with_row(values: values_for(video), id: id_for(video)) %>
