@@ -1,10 +1,13 @@
-# production:
-#   periodic_cleanup:
-#     class: CleanSoftDeletedRecordsJob
-#     queue: background
-#     args: [ 1000, { batch_size: 500 } ]
-#     schedule: every hour
-#   periodic_command:
-#     command: "SoftDeletedRecord.due.delete_all"
-#     priority: 2
-#     schedule: at 5am every day
+production:
+  refresh_channel_sul_dlss:
+    class: FetchJobChannel
+    args: [ { channel_id: 'UCc2CQuHkhKGZ-2ZLTZVGE2A' } ]
+    schedule: at 5am every Tue
+  refresh_channel_sul:
+    class: FetchJobChannel
+    args: [ { channel_id: 'UCw2hOU13JoFwWz9V4IztPrg' } ]
+    schedule: at 5am every Wed
+  refresh_channel_rumsey:
+    class: FetchJobChannel
+    args: [ { channel_id: 'UC9haNAEghTn4pHPsQdDIG3A' } ]
+    schedule: at 5am every Thurs
