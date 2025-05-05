@@ -11,3 +11,15 @@ production:
     class: FetchJobChannel
     args: [ { channel_id: 'UC9haNAEghTn4pHPsQdDIG3A' } ]
     schedule: at 5am every Thurs
+  channel_report_sul_dlss:
+    class: ChannelReportJob
+    args: [ { channel_id: 'UCc2CQuHkhKGZ-2ZLTZVGE2A' } ]
+    schedule: at 5am every Fri
+  channel_report_sul:
+    class: ChannelReportJob
+    args: [ { channel_id: 'UCw2hOU13JoFwWz9V4IztPrg' } ]
+    schedule: at 5am every Fri
+  channel_report_rumsey:
+    class: ChannelReportJob
+    args: [ { channel_id: 'UC9haNAEghTn4pHPsQdDIG3A' } ]
+    schedule: at 5am every Fri

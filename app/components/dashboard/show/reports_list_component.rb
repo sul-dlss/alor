@@ -33,7 +33,7 @@ module Dashboard
       end
 
       def reports
-        @reports ||= Report.where(channel_id: channel.channel_id)
+        @reports ||= Report.where(channel_id: channel.channel_id).sort_by(&:created_at).reverse
       end
     end
   end
