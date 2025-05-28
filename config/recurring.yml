@@ -1,25 +1,25 @@
 production:
   refresh_channel_sul_dlss:
-    class: FetchJobChannel
+    class: FetchChannelJob
     args: [ { channel_id: 'UCc2CQuHkhKGZ-2ZLTZVGE2A' } ]
-    schedule: at 5am every Tue
+    schedule: every tuesday at 5am
   refresh_channel_sul:
-    class: FetchJobChannel
+    class: FetchChannelJob
     args: [ { channel_id: 'UCw2hOU13JoFwWz9V4IztPrg' } ]
-    schedule: at 5am every Wed
+    schedule: every wednesday at 5am
   refresh_channel_rumsey:
-    class: FetchJobChannel
+    class: FetchChannelJob
     args: [ { channel_id: 'UC9haNAEghTn4pHPsQdDIG3A' } ]
-    schedule: at 5am every Thurs
+    schedule: every thursday at 5am
   channel_report_sul_dlss:
     class: ChannelReportJob
     args: [ { channel_id: 'UCc2CQuHkhKGZ-2ZLTZVGE2A' } ]
-    schedule: at 5am every Fri
+    schedule: every friday at 5am
   channel_report_sul:
     class: ChannelReportJob
     args: [ { channel_id: 'UCw2hOU13JoFwWz9V4IztPrg' } ]
-    schedule: at 5am every Fri
+    schedule: every friday at 5am
   channel_report_rumsey:
     class: ChannelReportJob
     args: [ { channel_id: 'UC9haNAEghTn4pHPsQdDIG3A' } ]
-    schedule: at 5am every Fri
+    schedule: every friday at 5am
