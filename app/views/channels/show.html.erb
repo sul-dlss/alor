@@ -28,7 +28,7 @@
                               { label: 'Captioned' },
                               { label: 'Published' }
                             ]) %>
-  <% @channel.videos.each do |video| %>
+  <% Video.where(channel: @channel).sort_by(&:published_date).reverse_each do |video| %>
     <% component.with_row(values: [
                             link_to(video.title, video_path(video_id: video.video_id)),
                             DurationPresenter.new(duration: video.duration).translate,
